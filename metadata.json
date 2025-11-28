@@ -1,5 +1,5 @@
 {
-  "name": "Deltom operator",
+  "name": "Deltom Operator",
   "description": "Plateforme SaaS de gestion d'interventions de nettoyage (React 19 + Supabase). Architecture multi-rôles.",
   "requestFramePermissions": []
 }
