@@ -1,5 +1,5 @@
 import React from 'react';
-import { HashRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import LoginPage from './pages/auth/LoginPage';
 import ProtectedRoute from './components/auth/ProtectedRoute';
@@ -72,10 +72,10 @@ function AppRoutes() {
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <AuthProvider>
         <AppRoutes />
       </AuthProvider>
-    </HashRouter>
+    </BrowserRouter>
   );
 }
