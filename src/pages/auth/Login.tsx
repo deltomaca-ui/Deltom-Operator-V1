@@ -4,7 +4,7 @@ import { UserRole } from '../../types/types';
 import { Shield, Key, User, Briefcase, Loader2, AlertCircle, ArrowRight } from 'lucide-react';
 import { Navigate } from 'react-router-dom';
 
-const LoginPage = () => {
+const Login = () => {
   const { signIn, signUp, loading, user } = useAuth();
   
   // ✅ SÉCURITÉ : Redirection automatique si déjà connecté
@@ -50,7 +50,7 @@ const LoginPage = () => {
     } catch (err: any) {
       console.error(err);
       if (err.message && err.message.includes('Invalid login credentials')) {
-        setError("Email ou mot de passe incorrect. Si vous venez de créer le compte, vérifiez que vous avez confirmé votre email (ou désactivez 'Confirm Email' dans Supabase).");
+        setError("Email ou mot de passe incorrect.");
       } else {
         setError(err.message || 'Une erreur est survenue');
       }
@@ -81,21 +81,21 @@ const LoginPage = () => {
   const ActiveIcon = roleConfig[selectedRole].icon;
 
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-4">
-      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden">
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 to-blue-50 p-4 font-sans">
+      <div className="w-full max-w-md bg-white rounded-2xl shadow-xl overflow-hidden animate-in fade-in zoom-in duration-300">
         <div className="p-8">
           {/* Header */}
           <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-gray-900 mb-2 tracking-tight">
               {mode === 'login' ? 'Connexion' : 'Créer un compte'}
             </h1>
-            <p className="text-gray-500">
+            <p className="text-gray-500 text-sm">
               {mode === 'login' ? 'Accédez à votre espace CleanManager' : 'Rejoignez la plateforme de gestion'}
             </p>
           </div>
 
           {/* Sélecteur de Rôle */}
-          <div className="flex p-1 bg-gray-100 rounded-xl mb-6">
+          <div className="flex p-1 bg-gray-100 rounded-xl mb-6 shadow-inner">
             {(Object.keys(roleConfig) as UserRole[]).map((role) => (
               <button
                 key={role}
@@ -103,8 +103,8 @@ const LoginPage = () => {
                 type="button"
                 className={`flex-1 py-2 text-xs md:text-sm font-medium rounded-lg transition-all duration-200 ${
                   selectedRole === role 
-                    ? 'bg-white text-gray-900 shadow-sm' 
-                    : 'text-gray-500 hover:text-gray-700'
+                    ? 'bg-white text-gray-900 shadow-sm transform scale-[1.02]' 
+                    : 'text-gray-500 hover:text-gray-700 hover:bg-gray-50'
                 }`}
               >
                 {role.charAt(0).toUpperCase() + role.slice(1)}
@@ -113,13 +113,13 @@ const LoginPage = () => {
           </div>
 
           {/* Info bulle rôle */}
-          <div className={`flex items-start gap-4 p-4 rounded-lg mb-6 ${roleConfig[selectedRole].bg} transition-colors duration-300`}>
-            <ActiveIcon className={`w-6 h-6 mt-1 ${roleConfig[selectedRole].color}`} />
+          <div className={`flex items-start gap-4 p-4 rounded-xl mb-6 ${roleConfig[selectedRole].bg} transition-colors duration-300 border border-transparent`}>
+            <ActiveIcon className={`w-6 h-6 mt-1 flex-shrink-0 ${roleConfig[selectedRole].color}`} />
             <div>
-              <h3 className={`font-semibold ${roleConfig[selectedRole].color}`}>
+              <h3 className={`font-semibold text-sm ${roleConfig[selectedRole].color}`}>
                 {mode === 'login' ? `Espace ${selectedRole}` : `Inscription ${selectedRole}`}
               </h3>
-              <p className="text-xs text-gray-600 mt-1">{roleConfig[selectedRole].desc}</p>
+              <p className="text-xs text-gray-600 mt-1 leading-relaxed">{roleConfig[selectedRole].desc}</p>
             </div>
           </div>
 
@@ -151,9 +151,9 @@ const LoginPage = () => {
                     onChange={(e) => setFullName(e.target.value)}
                     required={mode === 'register'}
                     placeholder="Jean Dupont"
-                    className="w-full px-4 py-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                    className="w-full px-4 py-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-200"
                   />
-                  <User className="w-5 h-5 text-gray-400 absolute left-3 top-3.5" />
+                  <User className="w-5 h-5 text-gray-400 absolute left-3 top-3.5 pointer-events-none" />
                 </div>
               </div>
             )}
@@ -167,7 +167,7 @@ const LoginPage = () => {
                   onChange={(e) => setEmail(e.target.value)}
                   required
                   placeholder="exemple@email.com"
-                  className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-200"
                 />
               </div>
             </div>
@@ -182,9 +182,9 @@ const LoginPage = () => {
                   required
                   placeholder="••••••••"
                   minLength={6}
-                  className="w-full px-4 py-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:outline-none transition-all"
+                  className="w-full px-4 py-3 pl-10 bg-gray-50 border border-gray-200 rounded-lg text-gray-900 placeholder-gray-400 focus:bg-white focus:ring-2 focus:ring-blue-500 focus:border-transparent focus:outline-none transition-all duration-200"
                 />
-                <Key className="w-5 h-5 text-gray-400 absolute left-3 top-3.5" />
+                <Key className="w-5 h-5 text-gray-400 absolute left-3 top-3.5 pointer-events-none" />
               </div>
               {mode === 'register' && (
                 <p className="text-xs text-gray-500 mt-1">6 caractères minimum</p>
@@ -194,7 +194,7 @@ const LoginPage = () => {
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-lg transition-colors duration-200 flex items-center justify-center disabled:opacity-50 disabled:cursor-not-allowed shadow-sm hover:shadow-md"
             >
               {loading ? (
                 <Loader2 className="w-5 h-5 animate-spin" />
@@ -214,7 +214,7 @@ const LoginPage = () => {
                   setError(null);
                   setSuccessMessage(null);
                 }}
-                className="ml-2 font-semibold text-blue-600 hover:text-blue-700 hover:underline focus:outline-none"
+                className="ml-2 font-semibold text-blue-600 hover:text-blue-700 hover:underline focus:outline-none transition-colors"
               >
                 {mode === 'login' ? "S'inscrire" : "Se connecter"}
               </button>
@@ -226,4 +226,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
